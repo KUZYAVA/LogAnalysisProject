@@ -7,6 +7,14 @@ public class Log {
 
     private String tag;
 
+    public Log createCopy() {
+        Log copyLog = new Log();
+        copyLog.setId(id);
+        copyLog.setMessage(message);
+        copyLog.setTag(tag);
+        return copyLog;
+    }
+
     public Long getId() {
         return id;
     }

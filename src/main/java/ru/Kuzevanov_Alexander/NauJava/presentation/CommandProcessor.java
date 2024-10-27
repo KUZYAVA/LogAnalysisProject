@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.Kuzevanov_Alexander.NauJava.data.model.Log;
 import ru.Kuzevanov_Alexander.NauJava.domain.LogService;
+import ru.Kuzevanov_Alexander.NauJava.domain.exception.CreateLogException;
+import ru.Kuzevanov_Alexander.NauJava.domain.exception.DeleteLogException;
+import ru.Kuzevanov_Alexander.NauJava.domain.exception.UpdateLogException;
 
 @Component
 public class CommandProcessor {
@@ -18,20 +21,36 @@ public class CommandProcessor {
         String[] cmd = input.split(" ");
         switch (cmd[0]) {
             case "create" -> {
-                logService.createLog(Long.valueOf(cmd[1]), cmd[2], cmd[3]);
-                System.out.println("Лог успешно добавлен");
+                try {
+                    logService.createLog(cmd[1], cmd[2]);
+                    System.out.println("Лог успешно добавлен");
+                } catch (CreateLogException e) {
+                    System.out.println("Не удалось добавить лог");
+                }
             }
             case "findById" -> {
-                Log log = logService.findById(Long.valueOf(cmd[1]));
-                System.out.println("Найден лог: " + log);
+                Log log = logService.findById(Long.valueOf(cmd[1])).orElse(null);
+                if (log != null) {
+                    System.out.println("Найден лог: " + log);
+                } else {
+                    System.out.println("Не удалось найти лог");
+                }
             }
             case "deleteById" -> {
-                logService.deleteById(Long.valueOf(cmd[1]));
-                System.out.println("Лог успешно удалён");
+                try {
+                    logService.deleteById(Long.valueOf(cmd[1]));
+                    System.out.println("Лог успешно удалён");
+                } catch (DeleteLogException e) {
+                    System.out.println("Не удалось удалить лог");
+                }
             }
             case "updateMessage" -> {
-                logService.updateMessage(Long.valueOf(cmd[1]), cmd[2]);
-                System.out.println("Лог успешно изменён");
+                try {
+                    logService.updateMessage(Long.valueOf(cmd[1]), cmd[2]);
+                    System.out.println("Лог успешно изменён");
+                } catch (UpdateLogException e) {
+                    System.out.println("Не удалось изменить лог");
+                }
             }
             default -> System.out.println("Введена неизвестная команда...");
         }
