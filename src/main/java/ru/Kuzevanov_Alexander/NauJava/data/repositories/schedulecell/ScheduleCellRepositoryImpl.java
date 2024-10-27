@@ -2,7 +2,6 @@ package ru.Kuzevanov_Alexander.NauJava.data.repositories.schedulecell;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.Kuzevanov_Alexander.NauJava.data.model.ScheduleCell;
 import ru.Kuzevanov_Alexander.NauJava.data.model.Teacher;
@@ -15,7 +14,6 @@ public class ScheduleCellRepositoryImpl implements ScheduleCellRepositoryCustom 
 
     private final EntityManager entityManager;
 
-    @Autowired
     public ScheduleCellRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

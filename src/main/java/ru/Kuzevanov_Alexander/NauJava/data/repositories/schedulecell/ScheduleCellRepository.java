@@ -3,11 +3,13 @@ package ru.Kuzevanov_Alexander.NauJava.data.repositories.schedulecell;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import ru.Kuzevanov_Alexander.NauJava.data.model.ScheduleCell;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@RepositoryRestResource(path = "schedule_cells")
 public interface ScheduleCellRepository extends CrudRepository<ScheduleCell, Long> {
 
     List<ScheduleCell> findByStartTimeOrEndTime(Timestamp startTime, Timestamp endTime);
