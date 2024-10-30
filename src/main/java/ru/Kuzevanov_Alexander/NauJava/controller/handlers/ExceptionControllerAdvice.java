@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.ReportNotFoundException;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.TeacherNotFoundException;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.TimeNotFoundException;
 import ru.Kuzevanov_Alexander.NauJava.dto.ErrorDto;
@@ -21,6 +22,8 @@ public class ExceptionControllerAdvice {
             return ErrorDto.create("Schedule with such teacher not found");
         } else if (e instanceof TimeNotFoundException) {
             return ErrorDto.create("Schedule with such start or end time not found");
+        } else if (e instanceof ReportNotFoundException) {
+            return ErrorDto.create("Report not found");
         }
         return ErrorDto.create(e);
     }
