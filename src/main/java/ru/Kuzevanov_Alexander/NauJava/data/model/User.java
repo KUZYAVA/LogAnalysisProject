@@ -21,6 +21,9 @@ public class User {
     @Column
     private List<String> roles;
 
+    @Column
+    private String groupName;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +54,13 @@ public class User {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }
