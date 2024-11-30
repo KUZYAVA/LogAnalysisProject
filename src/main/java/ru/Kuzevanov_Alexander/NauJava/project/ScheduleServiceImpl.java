@@ -2,7 +2,7 @@ package ru.Kuzevanov_Alexander.NauJava.project;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.Kuzevanov_Alexander.NauJava.project.exceptions.ReadingPageException;
+import ru.Kuzevanov_Alexander.NauJava.project.exceptions.NetworkException;
 import ru.Kuzevanov_Alexander.NauJava.project.model.ScheduleEvent;
 import ru.Kuzevanov_Alexander.NauJava.project.model.ScheduleEventRemote;
 
@@ -27,9 +27,15 @@ public class ScheduleServiceImpl implements ScheduleService {
             List<ScheduleEvent> scheduleEvents = scheduleEventsRemote.stream().map(ModelMapper::convertToEntity).collect(Collectors.toList());
             replaceAll(scheduleEvents);
             System.out.printf("%s schedule events successfully saved", scheduleEvents.size());
-        } catch (ReadingPageException e) {
+        } catch (NetworkException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Transactional
+    private void replaceAll(List<ScheduleEvent> scheduleEvents) {
+        scheduleEventRepository.deleteAll();
+        scheduleEventRepository.saveAll(scheduleEvents);
     }
 
     @Override
@@ -37,9 +43,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleEventRepository.findByGroupId(groupId);
     }
 
-    @Transactional
-    private void replaceAll(List<ScheduleEvent> scheduleEvents) {
-        scheduleEventRepository.deleteAll();
-        scheduleEventRepository.saveAll(scheduleEvents);
+    @Override
+    public Integer getGroupId(String groupTitle) throws NetworkException {
+        return scheduleApi.getGroupId(groupTitle);
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Расписание</title>
+</head>
+<body>
+<h1>Раписание</h1>
+<table border="1">
+    <tr>
+        <th>Название</th>
+        <th>Дата</th>
+        <th>Начало</th>
+        <th>Конец</th>
+        <th>Аудитория</th>
+        <th>Адрес</th>
+        <th>Преподаватель</th>
+    </tr>
+    <tr th:each="event : ${scheduleEvents}">
+        <td th:text="${event.title}"></td>
+        <td th:text="${event.date}"></td>
+        <td th:text="${event.timeBegin}"></td>
+        <td th:text="${event.timeEnd}"></td>
+        <td th:text="${event.auditoryTitle}"></td>
+        <td th:text="${event.auditoryLocation}"></td>
+        <td th:text="${event.teacherName}"></td>
+    </tr>
+</table>
+</body>
+</html>

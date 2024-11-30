@@ -3,7 +3,7 @@ package ru.Kuzevanov_Alexander.NauJava.project;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.stereotype.Component;
-import ru.Kuzevanov_Alexander.NauJava.project.exceptions.ReadingPageException;
+import ru.Kuzevanov_Alexander.NauJava.project.exceptions.NetworkException;
 import ru.Kuzevanov_Alexander.NauJava.project.model.GroupRemote;
 import ru.Kuzevanov_Alexander.NauJava.project.model.ScheduleRemote;
 import ru.Kuzevanov_Alexander.NauJava.project.model.ScheduleEventRemote;
@@ -24,9 +24,9 @@ public class ScheduleApi {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final Gson gson = new GsonBuilder().create();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("2024-11-26"); // todo return yyyy-MM-dd
 
-    public List<ScheduleEventRemote> getScheduleEvents() throws ReadingPageException {
+    public List<ScheduleEventRemote> getScheduleEvents() throws NetworkException {
         List<Integer> groupIds = getGroupIds();
         List<ScheduleEventRemote> scheduleEvents = new ArrayList<>();
         String currentDate = LocalDateTime.now().format(formatter);
@@ -40,13 +40,13 @@ public class ScheduleApi {
                 ScheduleEventRemote[] events = schedule.getEvents();
                 scheduleEvents.addAll(Arrays.asList(events));
             } catch (IOException | InterruptedException exception) {
-                throw new ReadingPageException("Не удалось корректно считать страницу!", exception);
+                throw new NetworkException("Не удалось корректно считать страницу!", exception);
             }
         }
         return scheduleEvents;
     }
 
-    public Integer getGroupId(String groupTitle) throws ReadingPageException {
+    public Integer getGroupId(String groupTitle) throws NetworkException {
         List<Integer> groupIds = new ArrayList<>();
         try {
             String searchGroupByTitle = String.format("https://urfu.ru/api/v2/schedule/groups?search=%s", groupTitle);
@@ -57,12 +57,12 @@ public class ScheduleApi {
                 groupIds.add(group.getId());
             }
         } catch (IOException | InterruptedException exception) {
-            throw new ReadingPageException("Не удалось корректно считать страницу!", exception);
+            throw new NetworkException("Не удалось корректно считать страницу!", exception);
         }
         return groupIds.getFirst();
     }
 
-    private List<Integer> getGroupIds() throws ReadingPageException {
+    private List<Integer> getGroupIds() throws NetworkException {
         List<Integer> groupIds = new ArrayList<>();
         for (int course = 1; course <= 6; course++) {
             try {
@@ -74,7 +74,7 @@ public class ScheduleApi {
                     groupIds.add(group.getId());
                 }
             } catch (IOException | InterruptedException exception) {
-                throw new ReadingPageException("Не удалось корректно считать страницу!", exception);
+                throw new NetworkException("Не удалось корректно считать страницу!", exception);
             }
         }
         return groupIds;
