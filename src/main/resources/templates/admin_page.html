@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель</title>
+</head>
+<body>
+<h1>Админ-панель</h1>
+<div th:if="${message}">
+    <div th:text="${message}"></div>
+</div>
+<form th:action="@{/admin}" method="post">
+    <div><label>Номер группы<input type="text" name="title"/></label></div>
+    <div><input type="submit" value="Изменить видимость"/></div>
+</form>
+</body>
+</html>
