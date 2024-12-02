@@ -28,15 +28,6 @@ public interface GroupService {
     List<Integer> findAllIds();
 
     /**
-     * Retrieves a group by its ID.
-     *
-     * @param id The ID of the group to retrieve.
-     * @return The Group object if found.
-     * @throws GroupNotFoundException If a group with the given ID is not found.
-     */
-    Group findById(Integer id) throws GroupNotFoundException;
-
-    /**
      * Retrieves a group by its title.
      *
      * @param title The title of the group to retrieve.

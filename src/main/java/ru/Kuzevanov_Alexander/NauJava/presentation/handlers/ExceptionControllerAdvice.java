@@ -10,9 +10,21 @@ import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.ExternalApiException;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.GroupNotFoundException;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.UserExistsException;
 
+/**
+ * A Spring ControllerAdvice class for handling exceptions globally across the application.  This class intercepts exceptions thrown
+ * by controllers and provides standardized error responses.
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
+    /**
+     * Handles generic exceptions. This acts as a fallback handler for any exceptions not specifically handled by other methods in this class.
+     * Provides specific error messages for known custom exceptions (ExternalApiException, GroupNotFoundException, UserExistsException),
+     * otherwise returns a generic error message based on the exception's message.
+     *
+     * @param e The exception that was thrown.
+     * @return An ErrorDto containing the error message.
+     */
     @ExceptionHandler(java.lang.Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -27,6 +39,12 @@ public class ExceptionControllerAdvice {
         return ErrorDto.create(e);
     }
 
+    /**
+     * Handles ResourceNotFoundException specifically.  This provides a more specific HTTP status code (NOT_FOUND) for resource-related errors.
+     *
+     * @param e The ResourceNotFoundException that was thrown.
+     * @return An ErrorDto containing the error message from the exception.
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.Kuzevanov_Alexander.NauJava.Constants;
+import ru.Kuzevanov_Alexander.NauJava.data.models.Group;
 import ru.Kuzevanov_Alexander.NauJava.data.models.User;
 import ru.Kuzevanov_Alexander.NauJava.data.repositories.UserRepository;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.GroupNotFoundException;
@@ -50,13 +51,13 @@ public class UserServiceImpl implements UserService {
             throw new UserExistsException();
         }
         String encodedPassword = passwordEncoder.encode(form.password());
-        String role = form.isAdmin() ? Constants.ROLE_ADMIN : Constants.ROLE_USER;
-        Integer groupId = groupService.findByTitle(form.groupTitle()).getId();
+        String role = (Boolean.TRUE.equals(form.isAdmin())) ? Constants.ROLE_ADMIN : Constants.ROLE_USER;
+        Group group = groupService.findByTitle(form.groupTitle());
         User user = new User();
         user.setUsername(form.username());
         user.setPassword(encodedPassword);
         user.setRoles(List.of(role));
-        user.setGroupId(groupId);
+        user.setGroup(group);
         userRepository.save(user);
     }
 

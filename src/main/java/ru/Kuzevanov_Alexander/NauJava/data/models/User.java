@@ -37,14 +37,14 @@ public class User {
     private List<String> roles;
 
     /**
-     * The ID of the group the user belongs to.
+     * The group the user belongs to.
      */
-    @Column
-    private Integer groupId;
-
+    @OneToOne
+    private Group group;
 
     /**
      * Returns the unique identifier of the user.
+     *
      * @return The user's ID.
      */
     public Long getId() {
@@ -53,6 +53,7 @@ public class User {
 
     /**
      * Sets the unique identifier of the user.  Generally, this should not be set manually; it's managed by the database.
+     *
      * @param id The ID to set.
      */
     public void setId(Long id) {
@@ -61,6 +62,7 @@ public class User {
 
     /**
      * Returns the username of the user.
+     *
      * @return The user's username.
      */
     public String getUsername() {
@@ -69,6 +71,7 @@ public class User {
 
     /**
      * Sets the username of the user.
+     *
      * @param username The username to set.
      */
     public void setUsername(String username) {
@@ -77,6 +80,7 @@ public class User {
 
     /**
      * Returns the password of the user.  Be mindful of security implications when accessing this directly.
+     *
      * @return The user's password.
      */
     public String getPassword() {
@@ -85,6 +89,7 @@ public class User {
 
     /**
      * Sets the password of the user.  Remember to hash the password before storing it for security.
+     *
      * @param password The password to set.
      */
     public void setPassword(String password) {
@@ -93,6 +98,7 @@ public class User {
 
     /**
      * Returns a list of roles assigned to the user.
+     *
      * @return The list of roles.
      */
     public List<String> getRoles() {
@@ -101,6 +107,7 @@ public class User {
 
     /**
      * Sets the list of roles assigned to the user.
+     *
      * @param roles The list of roles to set.
      */
     public void setRoles(List<String> roles) {
@@ -108,18 +115,20 @@ public class User {
     }
 
     /**
-     * Returns the ID of the group the user belongs to.
-     * @return The group ID.
+     * Returns the group the user belongs to.
+     *
+     * @return The group.
      */
-    public Integer getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
     /**
-     * Sets the ID of the group the user belongs to.
-     * @param groupId The group ID to set.
+     * Sets the group the user belongs to.
+     *
+     * @param group The group to set.
      */
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

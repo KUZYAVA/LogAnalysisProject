@@ -1,18 +1,56 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Регистрация</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .message {
+            color: red; /* Example styling for error messages */
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<div th:if="${message}">
-    <div th:text="${message}"></div>
-</div>
+<div th:if="${message}" class="message" th:text="${message}"></div>
+
 <form th:action="@{/registration}" method="post">
-    <div><label>Имя пользователя<input type="text" name="username"/></label></div>
-    <div><label>Пароль<input type="password" name="password"/></label></div>
-    <div><label>Номер группы<input type="text" name="groupTitle"/></label></div>
-    <div><label>Получить админ права<input type="checkbox" name="isAdmin"/></label></div>
-    <div><input type="submit" value="Зарегистрироваться"/></div>
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="groupTitle">Номер группы:</label>
+    <input type="text" id="groupTitle" name="groupTitle" placeholder="МЕН-100000" required>
+
+    <label for="isAdmin">
+        <input type="checkbox" id="isAdmin" name="isAdmin"> Получить админ права
+    </label>
+
+    <input type="submit" value="Зарегистрироваться">
 </form>
 </body>
 </html>

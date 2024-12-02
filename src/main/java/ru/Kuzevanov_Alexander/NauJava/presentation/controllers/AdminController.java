@@ -42,11 +42,12 @@ public class AdminController {
      * @param model The model to add attributes to (for error messages).
      */
     @PostMapping("/admin")
-    public void changeVisibility(String title, Model model) {
+    public String changeVisibility(String title, Model model) {
         try {
             groupService.changeVisibility(title);
         } catch (GroupNotFoundException e) {
             model.addAttribute("message", "Группа не найдена");
         }
+        return "admin_page";
     }
 }

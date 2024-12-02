@@ -27,7 +27,7 @@ public class ExternalApi {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final Gson gson = new GsonBuilder().create();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("2024-11-26");// todo return yyyy-MM-dd
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private static final Integer DIVISION_ID = 62404; // УрФУ, ИЕНиМ, Школа бакалавриата (включает 5 департаментов)
 
@@ -41,8 +41,7 @@ public class ExternalApi {
     public List<ScheduleEventResponse> getScheduleEvents(List<Integer> groupIds) throws ExternalApiException {
         List<ScheduleEventResponse> scheduleEvents = new ArrayList<>();
         String currentDate = LocalDateTime.now().format(formatter);
-        for (int i = 0; i < 1; i++) { // todo не забыть добавить size
-            int id = groupIds.get(i);
+        for (int id : groupIds) {
             try {
                 String getScheduleEventsUrl = String.format("https://urfu.ru/api/v2/schedule/groups/%s/schedule?date_gte=%s&date_lte=%s", id, currentDate, currentDate);
                 HttpRequest request = HttpRequest.newBuilder().uri(URI.create(getScheduleEventsUrl)).build();

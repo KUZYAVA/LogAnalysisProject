@@ -45,7 +45,6 @@ public class GroupServiceTest {
      */
     @Test
     void refresh() throws ExternalApiException {
-        groupRepository.deleteAll();
         groupService.refresh();
         List<Integer> groupIds = groupService.findAllIds();
         Assertions.assertFalse(groupIds.isEmpty(), "Expected groupIds to not be empty after refresh");

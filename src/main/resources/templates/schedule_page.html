@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Расписание</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <h1 th:text="${groupTitle}"></h1>
-<div th:if="${message}">
-    <div th:text="${message}"></div>
-</div>
-<table border="1">
+
+<div th:if="${message}" class="message" th:text="${message}"></div>
+
+<table>
+    <thead>
     <tr>
         <th>Название</th>
         <th>Дата</th>
@@ -18,6 +41,8 @@
         <th>Адрес</th>
         <th>Преподаватель</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="event : ${scheduleEvents}">
         <td th:text="${event.title}"></td>
         <td th:text="${event.date}"></td>
@@ -27,6 +52,7 @@
         <td th:text="${event.auditoryLocation}"></td>
         <td th:text="${event.teacherName}"></td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>
