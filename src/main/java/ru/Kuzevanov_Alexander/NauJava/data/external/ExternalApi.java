@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.springframework.stereotype.Component;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.ExternalApiException;
 import ru.Kuzevanov_Alexander.NauJava.data.external.models.GroupResponse;
-import ru.Kuzevanov_Alexander.NauJava.data.external.models.ScheduleResponse;
+import ru.Kuzevanov_Alexander.NauJava.data.external.models.GroupScheduleResponse;
 import ru.Kuzevanov_Alexander.NauJava.data.external.models.ScheduleEventResponse;
 
 import java.io.IOException;
@@ -37,8 +37,8 @@ public class ExternalApi {
                 String getScheduleEventsUrl = String.format("https://urfu.ru/api/v2/schedule/groups/%s/schedule?date_gte=%s&date_lte=%s", id, currentDate, currentDate);
                 HttpRequest request = HttpRequest.newBuilder().uri(URI.create(getScheduleEventsUrl)).build();
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                ScheduleResponse schedule = gson.fromJson(response.body(), ScheduleResponse.class);
-                ScheduleEventResponse[] events = schedule.events();
+                GroupScheduleResponse groupSchedule = gson.fromJson(response.body(), GroupScheduleResponse.class);
+                ScheduleEventResponse[] events = groupSchedule.events();
                 scheduleEvents.addAll(Arrays.asList(events));
             } catch (IOException | InterruptedException exception) {
                 throw new ExternalApiException();

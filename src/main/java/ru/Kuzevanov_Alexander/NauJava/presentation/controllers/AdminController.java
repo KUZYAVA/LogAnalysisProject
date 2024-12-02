@@ -5,15 +5,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.Kuzevanov_Alexander.NauJava.domain.exceptions.GroupNotFoundException;
-import ru.Kuzevanov_Alexander.NauJava.domain.services.admin.AdminService;
+import ru.Kuzevanov_Alexander.NauJava.domain.services.group.GroupService;
 
 @Controller
 public class AdminController {
 
-    private final AdminService adminService;
+    private final GroupService groupService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
+    public AdminController(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     @GetMapping("/admin")
@@ -24,7 +24,7 @@ public class AdminController {
     @PostMapping("/admin")
     public void changeVisibility(String title, Model model) {
         try {
-            adminService.changeVisibility(title);
+            groupService.changeVisibility(title);
         } catch (GroupNotFoundException e) {
             model.addAttribute("message", "Группа не найдена");
         }

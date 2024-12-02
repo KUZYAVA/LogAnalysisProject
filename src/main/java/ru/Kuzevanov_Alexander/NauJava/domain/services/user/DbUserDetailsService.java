@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import ru.Kuzevanov_Alexander.NauJava.data.models.User;
-import ru.Kuzevanov_Alexander.NauJava.data.repositories.UserRepository;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -15,17 +14,17 @@ import java.util.stream.Collectors;
 @Component
 public class DbUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private static final String ROLE_PREFIX = "ROLE_";
 
-    public DbUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public DbUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User appUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User appUser = userService.findByUsername(username);
         return new org.springframework.security.core.userdetails.User(appUser.getUsername(), appUser.getPassword(), mapRoles(appUser));
     }
 
