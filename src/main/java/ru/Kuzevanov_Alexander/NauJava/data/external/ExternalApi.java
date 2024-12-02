@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A service class for interacting with an external API, likely for retrieving schedule information.
+ */
 @Component
 public class ExternalApi {
 
@@ -28,6 +31,13 @@ public class ExternalApi {
 
     private static final Integer DIVISION_ID = 62404; // УрФУ, ИЕНиМ, Школа бакалавриата (включает 5 департаментов)
 
+    /**
+     * Retrieves schedule events for a list of group IDs.
+     *
+     * @param groupIds A list of group IDs to fetch schedules for.
+     * @return A list of {@link ScheduleEventResponse} objects representing the schedule events.  Returns an empty list if no events are found or an error occurs.
+     * @throws ExternalApiException If there is an error communicating with the external API.
+     */
     public List<ScheduleEventResponse> getScheduleEvents(List<Integer> groupIds) throws ExternalApiException {
         List<ScheduleEventResponse> scheduleEvents = new ArrayList<>();
         String currentDate = LocalDateTime.now().format(formatter);
@@ -47,6 +57,12 @@ public class ExternalApi {
         return scheduleEvents;
     }
 
+    /**
+     * Retrieves a list of groups for a specific division and course range.
+     *
+     * @return A list of {@link GroupResponse} objects representing the groups. Returns an empty list if no groups are found or an error occurs.
+     * @throws ExternalApiException If there is an error communicating with the external API.
+     */
     public List<GroupResponse> getGroups() throws ExternalApiException {
         List<GroupResponse> groups = new ArrayList<>();
         for (int course = 1; course <= 6; course++) {
@@ -63,4 +79,3 @@ public class ExternalApi {
         return groups;
     }
 }
-

@@ -9,15 +9,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Spring Security configuration class. This class configures Spring Security to protect
+ * application URLs based on user roles and provides a bean for password encoding.
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    /**
+     * Creates a bean for password encoding using BCrypt.
+     *
+     * @return A BCryptPasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the security filter chain. This method defines the authorization rules for
+     * different URLs based on user roles.  It also configures default form-based login.
+     *
+     * @param http The HttpSecurity object to configure.
+     * @return A SecurityFilterChain instance.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authz) -> authz
