@@ -14,11 +14,11 @@ import java.util.List;
 public interface GroupService {
 
     /**
-     * Refreshes the group data from an external source.
+     * Loads the group data from an external source.
      *
      * @throws ExternalApiException If an error occurs during communication with the external API.
      */
-    void refresh() throws ExternalApiException;
+    void load() throws ExternalApiException;
 
     /**
      * Retrieves a list of all group IDs.

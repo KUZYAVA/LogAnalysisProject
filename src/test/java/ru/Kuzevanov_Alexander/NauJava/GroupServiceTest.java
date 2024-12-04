@@ -37,15 +37,15 @@ public class GroupServiceTest {
     }
 
     /**
-     * Tests the refresh method of the GroupService.  This test verifies that the refresh method
+     * Tests the load method of the GroupService.  This test verifies that the load method
      * populates the database with group data and that the findAllIds method returns a non-empty list
-     * after the refresh.
+     * after the load.
      *
      * @throws ExternalApiException If an error occurs during the refresh operation.
      */
     @Test
-    void refresh() throws ExternalApiException {
-        groupService.refresh();
+    void load() throws ExternalApiException {
+        groupService.load();
         List<Integer> groupIds = groupService.findAllIds();
         Assertions.assertFalse(groupIds.isEmpty(), "Expected groupIds to not be empty after refresh");
     }

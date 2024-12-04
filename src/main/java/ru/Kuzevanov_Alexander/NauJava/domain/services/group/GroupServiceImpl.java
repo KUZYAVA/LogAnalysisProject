@@ -1,7 +1,6 @@
 package ru.Kuzevanov_Alexander.NauJava.domain.services.group;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.Kuzevanov_Alexander.NauJava.data.external.ExternalApi;
 import ru.Kuzevanov_Alexander.NauJava.data.external.ModelMapper;
 import ru.Kuzevanov_Alexander.NauJava.data.external.models.GroupResponse;
@@ -33,28 +32,15 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
-     * Refreshes the local database with group data from the external API.
-     * Fetches all groups from the external API, converts them to entities, and replaces the entire existing database content with the fetched data.  This ensures data consistency.
+     * Fetches all groups from the external API, converts them to entities, and saves to database.
      *
      * @throws ExternalApiException If there is an error communicating with the external API.
      */
     @Override
-    public void refresh() throws ExternalApiException {
+    public void load() throws ExternalApiException {
         List<GroupResponse> groupResponses = externalApi.getGroups();
         List<Group> groups = groupResponses.stream().map(ModelMapper::convertToEntity).toList();
-        replaceAll(groups);
         System.out.printf("%d groups successfully saved%n", groups.size());
-    }
-
-    /**
-     * Transactionally replaces all existing groups in the database with the provided list.
-     *
-     * @param groups The list of groups to replace the database with.
-     */
-    @Transactional
-    private void replaceAll(List<Group> groups) {
-        groupRepository.deleteAll();
-        groupRepository.saveAll(groups);
     }
 
     /**

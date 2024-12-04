@@ -36,7 +36,7 @@ public class RefreshScheduleEventsTask {
     @Scheduled(fixedRate = ONE_DAY_RATE)
     public void refreshScheduleEvents() throws ExternalApiException {
         if (groupService.findAllIds().isEmpty()) {
-            groupService.refresh();
+            groupService.load();
         }
         scheduleEventService.refresh();
     }

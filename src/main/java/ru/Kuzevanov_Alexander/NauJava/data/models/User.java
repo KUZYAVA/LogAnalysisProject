@@ -39,7 +39,7 @@ public class User {
     /**
      * The group the user belongs to.
      */
-    @OneToOne
+    @ManyToOne
     private Group group;
 
     /**
