@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Админ-панель</h1>
+
+<div th:if="${message}" class="message">
+    <span th:text="${message}"></span>
+</div>
+
+<form th:action="@{/admin}" method="post">
+    <label for="groupNumber">Номер группы:</label>
+    <input type="text" id="groupNumber" name="title" placeholder="МЕН-100000" required>
+    <input type="submit" value="Изменить видимость">
+</form>
+</body>
+</html>
