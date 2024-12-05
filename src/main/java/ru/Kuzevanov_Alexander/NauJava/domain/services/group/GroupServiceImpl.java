@@ -40,6 +40,7 @@ public class GroupServiceImpl implements GroupService {
     public void load() throws ExternalApiException {
         List<GroupResponse> groupResponses = externalApi.getGroups();
         List<Group> groups = groupResponses.stream().map(ModelMapper::convertToEntity).toList();
+        groupRepository.saveAll(groups);
         System.out.printf("%d groups successfully saved%n", groups.size());
     }
 
